@@ -35,7 +35,7 @@ class AuthService {
             tokenString
         );
 
-        const url = `http://localhost:8000/auth/${newUser.id}/verify/${token.code}`;
+        const url = `http://sigma-rules-frontend.vercel.app/auth/${newUser.id}/verify/${token.code}`;
         await sendEmail(email, "Verify Email", url);
 
         return {
