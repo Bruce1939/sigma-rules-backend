@@ -75,15 +75,12 @@ class AuthService {
                 401
             );
 
-        const { accessToken, refreshToken } = generateAuthTokens(
+        const token = generateAuthTokens(
             userExists._id,
             userExists.email
         );
-        const cookieMaxAge = 10 * 60 * 1000;
-        const cookie = setCookieConfig("jwt", refreshToken, cookieMaxAge);
-
         return {
-            data: { accessToken, cookie },
+            data: token,
             message: "User logged in successfully",
             error: false,
         };
@@ -114,29 +111,6 @@ class AuthService {
             data: userDetails,
             error: false,
             message: "Signup successful",
-        };
-    }
-
-    async refresh(refreshToken) {
-        const verifiedToken = verifyToken(refreshToken);
-        if (!verifiedToken.id) throw new ApiError("Invalid refresh token", 401);
-
-        const { id } = verifiedToken;
-        const user = await this.repository.findUser(id);
-
-        if (!user) throw new ApiError("User doesn't exists", 404);
-
-        const accessTokenPayload = {
-            id: user._id,
-            email: user.email,
-        };
-
-        const accessToken = generateAccessToken(accessTokenPayload);
-
-        return {
-            data: accessToken,
-            error: false,
-            message: "Auth token refreshed successfully",
         };
     }
 }

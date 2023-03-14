@@ -11,7 +11,7 @@ const authorizeUser = async (req, res, next) => {
 
             const value = jwt.verify(
                 token,
-                env.JWT_ACCESS_TOKEN_SECRET,
+                env.JWT_TOKEN_SECRET,
                 (err, decoded) => {
                     if (err) return err;
                     return decoded;

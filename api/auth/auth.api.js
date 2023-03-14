@@ -27,15 +27,9 @@ const authApi = (app) => {
         "/api/auth/login",
         errorHandler(async (req, res, next) => {
             const { email, password } = req.body;
-            const result = await service.login(email, password);
-            const { accessToken, cookie } = result.data;
-            const { cookieName, value, config } = cookie;
-            res.cookie(cookieName, value, config);
-            return res.json({
-                data: accessToken,
-                error: false,
-                message: "Login successful",
-            });
+            const data = await service.login(email, password);
+            const { accessToken } = result.data;
+            return res.json(data);
         })
     );
 
@@ -44,17 +38,6 @@ const authApi = (app) => {
         errorHandler(async (req, res, next) => {
             const { id, token } = req.params;
             const data = await service.verifyEmail(id, token);
-            return res.json(data);
-        })
-    );
-
-    app.get(
-        "/api/auth/refresh",
-        errorHandler(async (req, res, next) => {
-            const cookie = req.cookies;
-            if (!cookie?.jwt) throw new ApiError("Missing credentials", 404);
-            const refreshToken = cookie.jwt;
-            const data = await service.refresh(refreshToken);
             return res.json(data);
         })
     );
