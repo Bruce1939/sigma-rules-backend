@@ -4,9 +4,6 @@ import {
     comparePasswords,
     generateHashedPassword,
     generateAuthTokens,
-    setCookieConfig,
-    verifyToken,
-    generateAccessToken,
     sendEmail,
     generateVerificationTokenString,
 } from "../../utils/index.js";

@@ -1,8 +1,6 @@
 import ApiError from "./apiError.js";
 import {
     generateAuthTokens,
-    generateAccessToken,
-    setCookieConfig,
     verifyToken,
 } from "./authTokens.js";
 import errorHandler from "./errorHandler.js";
@@ -13,9 +11,7 @@ import validateSignup from "./validate.js";
 
 export {
     ApiError,
-    generateAccessToken,
     generateAuthTokens,
-    setCookieConfig,
     verifyToken,
     errorHandler,
     generateHashedPassword,
