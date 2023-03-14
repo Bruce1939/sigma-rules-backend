@@ -37,7 +37,6 @@ class AuthService {
             newUser._id,
             tokenString
         );
-        console.log("token", token);
 
         const url = `http://localhost:8000/auth/${newUser.id}/verify/${token.code}`;
         await sendEmail(email, "Verify Email", url);
@@ -75,10 +74,7 @@ class AuthService {
                 401
             );
 
-        const token = generateAuthTokens(
-            userExists._id,
-            userExists.email
-        );
+        const token = generateAuthTokens(userExists._id, userExists.email);
         return {
             data: token,
             message: "User logged in successfully",
